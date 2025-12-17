@@ -64,6 +64,19 @@ sudo ./result/bin/net_monitor 192.168.50.0/24
 sudo ./result/bin/net_monitor 192.168.1.100/32
 ```
 
+### 使用 arpspoof 转发流量
+如果你想要监控在局域网下的流量，可以通过使用 arpspoof 将本地机伪装成路由器，将所有流量都通过本地机 CPU 转发。打开另一个终端窗口（在 nix-shell 中），运行 arpspoof ：
+```Bash
+# 语法: sudo arpspoof -i [网卡名] -t [目标IP] [网关IP]
+
+# 只强制转发目标 IP 
+sudo arpspoof -i eth0 -t 192.168.1.10 192.168.1.1
+    
+# 强制转发网关下所有 IP 
+sudo arpspoof -i eth0 192.168.1.100
+```
++ 性能影响：所有流量都经过你的 CPU 转发，如果你的 CPU 弱或者网络是千兆/万兆，你的电脑会成为网络瓶颈，导致所有人网速变慢。
+
 ### 键盘操作
 + `q` 或 `Ctrl+C`: 退出程序。
 
